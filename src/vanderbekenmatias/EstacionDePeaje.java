@@ -10,21 +10,16 @@ public class EstacionDePeaje {
 
 	private List<Cabina> cabinas;
 
-	private Integer cantidadDeCabinas;
-
-	/*
-	 * Al momento de la creacion de la estacion de peajes se deben crear todas las cabianas
-	 * donde en la posicion 0 hay una cabina de Telepase y el resto de las cabinas son comunes 
-	 */
-	public EstacionDePeaje(Integer cantidadDeCabinas) {
+	
+	public EstacionDePeaje() {
 		
 
 	}
 
 	//Metodo que agrega todas las cabinas (No Obligatorio)
-	private void agregarCabinas() {
+	public void agregarCabinas(Cabina cabina) {
 		
-
+			cabinas.add(cabina);
 		
 
 	}
@@ -32,7 +27,13 @@ public class EstacionDePeaje {
 	/*
 	 * obtiene todas un listado de cabinas ordenas por importe recaudado en forma descendete
 	 */
-	public Set<Cabina> otenerCabinasOrdenadaImporteDescendente(Orden orden) {
+	public Set<Cabina> otenerCabinasOrdenadaImporteDescendente(OrdenarCabinasImporteDescendente orden) {
+		
+		Set<Cabina> cabinasOrdenadasPorImporteDescendente = new TreeSet<Cabina>();
+		
+		cabinasOrdenadasPorImporteDescendente.addAll(cabinas);
+		
+		return cabinasOrdenadasPorImporteDescendente ;
 
 		
 	}

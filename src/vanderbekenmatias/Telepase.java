@@ -2,6 +2,7 @@ package vanderbekenmatias;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Telepase extends Cabina {
 
@@ -12,17 +13,31 @@ public class Telepase extends Cabina {
 	private Set<Tag> tags;
 
 	public Telepase(Integer numero) {
+		
+		super(numero);
 
-		
-		
-		
 		//siempre al momento de crear un telepase se crea el tag 1 con 200 pesos de carga 
 		Tag tagInicial =new Tag (1);
 		tagInicial.setSaldo(200.0);
+		tags = new HashSet<Tag>();
 		this.cargarTag(tagInicial);
+		
 	}
 
 	public Boolean cargarTag(Tag tag) {
+		
+		if(tags.add(tag)) {
+			
+			return true;
+		}
+		
+		
+		else {
+			
+			return false;
+			
+		}
+		
 		
 	}
 
@@ -38,12 +53,42 @@ public class Telepase extends Cabina {
 	 * 3) en caso que el importe que tiene el tag no alcanza para pagar el peaje laza una SaldoInsuficienteError
 	 * 
 	 */
-	public void pagarAutomatico(Vehiculo vehiculo)	{
+	public void pagarAutomatico(Vehiculo vehiculo) throws SaldoInsuficienteError, VehiculoNoPermitidoExceptions	{
+		
+		if(vehiculo instanceof AutoBus) {
+			
+			for (Tag tag : tags) {
+				
+				if(((AutoBus) vehiculo).getTag().getId().equals(tag.getId()) && ((AutoBus) vehiculo).getTag().getSaldo() > 200D) {
+					
+					tag.setSaldo(getRecaudacion() - getTarifaAutoBus());
+				}
+				
+				else {
+					
+				
+					new SaldoInsuficienteError();
+					
+				}
+				
+			}
+			
+		}
+			
+	
+			else {
+				
+				new  VehiculoNoPermitidoExceptions();
+			}
+			
+		
 	}
 
 
 	//Metodo no obligatorio
 	private void pagarConTelePase(Vehiculo vehiculo) throws SaldoInsuficienteError, TagNoEncontradoException {
+		
+		
 
 	}
 //Verifica que si existe el tag
